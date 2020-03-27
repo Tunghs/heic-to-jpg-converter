@@ -146,5 +146,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SHControls\SHControls.csproj">
+      <Project>{2b1fef09-9ce1-419d-b1a7-faeb095cc9c7}</Project>
+      <Name>SHControls</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
