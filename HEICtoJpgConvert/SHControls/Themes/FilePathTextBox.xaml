@@ -1,0 +1,31 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:Controls="clr-namespace:SHControls.Controls">
+    
+    <Style TargetType="{x:Type Controls:FilePathTextBox}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Controls:FilePathTextBox}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="8*"/>
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="0">
+                            <TextBlock Text="{TemplateBinding ControlName}" VerticalAlignment="Center" Margin="5"/>
+                        </Grid>
+                        <Grid Grid.Column="1">
+                            <TextBox x:Name="PART_TextBox" Text="{TemplateBinding FilePath}" 
+                                     VerticalAlignment="Center" Margin="5"/>
+                        </Grid>
+                        <Grid Grid.Column="2">
+                            <Button x:Name="PART_Button" Content="..." VerticalAlignment="Center" Margin="5"></Button>
+                        </Grid>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+</ResourceDictionary>
