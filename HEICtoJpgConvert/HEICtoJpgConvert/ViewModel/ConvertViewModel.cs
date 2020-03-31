@@ -6,6 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using System.Windows;
+using ImageMagick;
 
 namespace HEICtoJpgConvert.ViewModel
 {
@@ -17,12 +19,6 @@ namespace HEICtoJpgConvert.ViewModel
         {
             get { return _sourcePath; }
             set { _sourcePath = value; RaisePropertyChanged("SourcePath"); }
-        }
-        private string _savePath;
-        public string SavePath
-        {
-            get { return _savePath; }
-            set { _savePath = value; RaisePropertyChanged("SavePath"); }
         }
         #endregion
 
@@ -39,7 +35,7 @@ namespace HEICtoJpgConvert.ViewModel
         {
             switch (param.ToString())
             {
-                case "OpenFileBrowser":
+                case "Convert":
                     OnConvertProcess();
                     break;
             }
@@ -47,9 +43,52 @@ namespace HEICtoJpgConvert.ViewModel
 
         private void OnConvertProcess()
         {
-            if ()
+            if (File.Exists(SourcePath))
+            {
+                ConvertFile(SourcePath);
+                MessageBox.Show("Convert 완료");
+            }
+            else if (Directory.Exists(SourcePath))
+            {
+                ConvertDirectory(SourcePath);
+                MessageBox.Show("Convert 완료");
+            }
+            else
+            {
+                MessageBox.Show("경로를 다시 확인해주세요.");
+            }     
         }
         #endregion
         #endregion
+
+        public ConvertViewModel()
+        {
+            InitRelayCommand();
+        }
+
+        private void ConvertFile(string srcPath)
+        {
+            using (MagickImage img = new MagickImage(srcPath))
+            {
+                string saveDir = Path.Combine(Path.GetDirectoryName(srcPath), "SaveJPG");
+
+                DirectoryInfo dir = new DirectoryInfo(saveDir);
+                if (!dir.Exists)
+                    dir.Create();
+
+                string saveImgPath = Path.Combine(saveDir, Path.GetFileNameWithoutExtension(srcPath) + ".jpg");
+                img.Write(saveImgPath);
+            }
+        }
+
+        private void ConvertDirectory(string srcPath)
+        {
+            DirectoryInfo dir = new DirectoryInfo(srcPath);
+            foreach (FileInfo file in dir.GetFiles())
+            {
+                if (file.Extension.ToLower() == ".heic")
+                    ConvertFile(file.FullName);
+            }
+        }
     }
 }
