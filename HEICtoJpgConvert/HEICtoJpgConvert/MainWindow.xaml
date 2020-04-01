@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:HEICtoJpgConvert"
         xmlns:View="clr-namespace:HEICtoJpgConvert.View"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" ResizeMode="NoResize">
+        Title="HEIC to JPG Converter" Height="450" Width="800" ResizeMode="NoResize">
     <Grid>
         <View:ConvertView/>
     </Grid>

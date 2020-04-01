@@ -1,13 +1,9 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
 using System.Windows;
 using ImageMagick;
+using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace HEICtoJpgConvert.ViewModel
 {
@@ -38,6 +34,9 @@ namespace HEICtoJpgConvert.ViewModel
                 case "Convert":
                     OnConvertProcess();
                     break;
+                case "test":
+                    OnTest();
+                    break;
             }
         }
 
@@ -57,6 +56,13 @@ namespace HEICtoJpgConvert.ViewModel
             {
                 MessageBox.Show("경로를 다시 확인해주세요.");
             }     
+        }
+
+        private void OnTest()
+        {
+            CommonOpenFileDialog dialog = new CommonOpenFileDialog();
+            dialog.InitialDirectory = "C:\\Users";
+            
         }
         #endregion
         #endregion
