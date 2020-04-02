@@ -64,7 +64,7 @@ namespace HEICtoJpgConvert.ViewModel
             dialog.InitialDirectory = "C:\\Users";
             
         }
-        #endregion
+        #endregion       
         #endregion
 
         public ConvertViewModel()

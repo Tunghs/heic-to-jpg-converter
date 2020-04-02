@@ -13,12 +13,11 @@
     </UserControl.DataContext>
     
     <Grid>
-        <StackPanel Orientation="Vertical" Margin="10" HorizontalAlignment="Center">
-            <SHControls:FilePathTextBox Height="50" Width="500" ControlName="이미지 경로"
-                                        FilePath="{Binding SourcePath, Mode=TwoWay}"/>
-
-            <Button Content="Convert" Margin="0 20" Height="60"
+        <StackPanel Orientation="Vertical" Margin="10" HorizontalAlignment="Center" Width="750">
+            <Button Content="파일 업로드" Margin="0 20" Height="60"
                     Command="{Binding ButtonClickCommand}" CommandParameter="Convert"/>
+
+            <ListView Height="220"/>
 
             <Button Content="test" Margin="0 20" Height="60"
                     Command="{Binding ButtonClickCommand}" CommandParameter="test"/>
