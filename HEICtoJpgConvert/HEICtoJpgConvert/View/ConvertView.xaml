@@ -14,12 +14,12 @@
     
     <Grid>
         <StackPanel Orientation="Vertical" Margin="10" HorizontalAlignment="Center" Width="750">
-            <Button Content="파일 업로드" Margin="0 20" Height="60"
+            <Button Content="Upload Files..." Margin="0 20" Height="60"
                     Command="{Binding ButtonClickCommand}" CommandParameter="Convert"/>
 
-            <ListView Height="220"/>
+            <ListView Height="200"/>
 
-            <Button Content="test" Margin="0 20" Height="60"
+            <Button Content="Convert" Margin="0 20" Height="60"
                     Command="{Binding ButtonClickCommand}" CommandParameter="test"/>
         </StackPanel>
     </Grid>
