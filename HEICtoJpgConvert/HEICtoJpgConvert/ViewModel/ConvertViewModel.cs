@@ -17,12 +17,17 @@ namespace HEICtoJpgConvert.ViewModel
             get { return _sourcePath; }
             set { _sourcePath = value; RaisePropertyChanged("SourcePath"); }
         }
-
         private ObservableCollection<string> _collectionFileList = new ObservableCollection<string>();
         public ObservableCollection<string> CollectionFileList
         {
             get { return _collectionFileList; }
             set { _collectionFileList = value; }
+        }
+        private string _selectedListBoxItem;
+        public string SelectedListBoxItem
+        {
+            get { return _selectedListBoxItem; }
+            set { _selectedListBoxItem = value; RaisePropertyChanged("SelectedListBoxItem"); }
         }
         #endregion
 
@@ -43,7 +48,7 @@ namespace HEICtoJpgConvert.ViewModel
                     UploadFilesClick();
                     break;
                 case "DeleteFileClick":
-                    OnTest();
+                    DeleteFileClick();
                     break;
             }
         }
@@ -66,6 +71,12 @@ namespace HEICtoJpgConvert.ViewModel
                 foreach (string file in dlg.FileNames)
                     CollectionFileList.Add(file);
             }
+        }
+
+        private void DeleteFileClick()
+        {
+            MessageBox.Show(SelectedListBoxItem);
+            // CollectionFileList.Remove(SelectedListBoxItem);
         }
 
         /// <summary>
