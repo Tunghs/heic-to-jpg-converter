@@ -39,15 +39,38 @@ namespace HEICtoJpgConvert.ViewModel
         {
             switch (param.ToString())
             {
-                case "Convert":
-                    OnConvertProcess();
+                case "UploadFilesClick":
+                    UploadFilesClick();
                     break;
-                case "test":
+                case "DeleteFileClick":
                     OnTest();
                     break;
             }
         }
 
+        /// <summary>
+        /// UploadFiles Button Click
+        /// </summary>
+        private void UploadFilesClick()
+        {
+            CommonOpenFileDialog dlg = new CommonOpenFileDialog();
+
+            dlg.Title = "Select the HEIC Files";
+            dlg.InitialDirectory = "C:\\";
+            dlg.Filters.Add(new CommonFileDialogFilter("HEIC Files", "*.heic"));
+            // 다중 파일 선택 기능.
+            dlg.Multiselect = true;
+
+            if (dlg.ShowDialog() == CommonFileDialogResult.Ok)
+            {
+                foreach (string file in dlg.FileNames)
+                    CollectionFileList.Add(file);
+            }
+        }
+
+        /// <summary>
+        /// 코드 수정 후 변경!
+        /// </summary>
         private void OnConvertProcess()
         {
             if (File.Exists(SourcePath))
