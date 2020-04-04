@@ -17,7 +17,8 @@
             <Button Content="Upload Files..." Margin="0 20" Height="60"
                     Command="{Binding ButtonClickCommand}" CommandParameter="Convert"/>
 
-            <ListView Height="200"/>
+            <ListBox x:Name="FileList" FontSize="12" BorderThickness="1" Height="200"
+                     ItemsSource="{Binding CollectionFileList}" />
 
             <Button Content="Convert" Margin="0 20" Height="60"
                     Command="{Binding ButtonClickCommand}" CommandParameter="test"/>

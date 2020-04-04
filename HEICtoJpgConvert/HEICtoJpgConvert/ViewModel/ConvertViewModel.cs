@@ -4,6 +4,7 @@ using System.IO;
 using System.Windows;
 using ImageMagick;
 using Microsoft.WindowsAPICodePack.Dialogs;
+using System.Collections.ObjectModel;
 
 namespace HEICtoJpgConvert.ViewModel
 {
@@ -15,6 +16,13 @@ namespace HEICtoJpgConvert.ViewModel
         {
             get { return _sourcePath; }
             set { _sourcePath = value; RaisePropertyChanged("SourcePath"); }
+        }
+
+        private ObservableCollection<string> _collectionFileList = new ObservableCollection<string>();
+        public ObservableCollection<string> CollectionFileList
+        {
+            get { return _collectionFileList; }
+            set { _collectionFileList = value; }
         }
         #endregion
 
