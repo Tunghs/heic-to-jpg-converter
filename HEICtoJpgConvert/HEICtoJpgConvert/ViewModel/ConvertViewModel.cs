@@ -5,6 +5,7 @@ using System.Windows;
 using ImageMagick;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace HEICtoJpgConvert.ViewModel
 {
@@ -23,11 +24,11 @@ namespace HEICtoJpgConvert.ViewModel
             get { return _collectionFileList; }
             set { _collectionFileList = value; }
         }
-        private string _selectedListBoxItem;
-        public string SelectedListBoxItem
+        private List<string> _selectedListBoxItems = new List<string>();
+        public List<string> SelectedListBoxItems
         {
-            get { return _selectedListBoxItem; }
-            set { _selectedListBoxItem = value; RaisePropertyChanged("SelectedListBoxItem"); }
+            get { return _selectedListBoxItems; }
+            set { _selectedListBoxItems = value; RaisePropertyChanged("SelectedListBoxItems"); }
         }
         #endregion
 
@@ -75,8 +76,9 @@ namespace HEICtoJpgConvert.ViewModel
 
         private void DeleteFileClick()
         {
-            MessageBox.Show(SelectedListBoxItem);
-            // CollectionFileList.Remove(SelectedListBoxItem);
+            MessageBox.Show("클릭");
+            foreach(string item in SelectedListBoxItems)
+                CollectionFileList.Remove(item);
         }
 
         /// <summary>
