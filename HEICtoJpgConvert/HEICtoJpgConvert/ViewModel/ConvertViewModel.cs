@@ -24,7 +24,7 @@ namespace HEICtoJpgConvert.ViewModel
             get { return _collectionFileList; }
             set { _collectionFileList = value; }
         }
-        private List<string> _selectedListBoxItems = new List<string>();
+        private  _selectedListBoxItems = new List<string>();
         public List<string> SelectedListBoxItems
         {
             get { return _selectedListBoxItems; }
