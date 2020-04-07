@@ -26,8 +26,10 @@
                      ItemsSource="{Binding CollectionFileList}" SelectedItem="{Binding SelectedListBoxItems}"/>
 
             <StackPanel Orientation="Horizontal" Margin="0 0 0 5" HorizontalAlignment="Center">
-                <CheckBox Content="폴더 경로에 저장" VerticalContentAlignment="Center" Margin="0 0 20 0"/>
-                <SHControls:FilePathTextBox ControlName="Save Dir Path" Width="610" FontSize="14" ISFolder="True"/>
+                <CheckBox Content="폴더 경로에 저장" VerticalContentAlignment="Center" Margin="0 0 20 0"
+                          Command="{Binding CheckBoxClickCommand}"/>
+                <SHControls:FilePathTextBox ControlName="Save Dir Path" Width="610" FontSize="14" ISFolder="True" 
+                                            IsEnabled="{Binding SaveDirControlEnabled, Mode=TwoWay}"/>
             </StackPanel>
 
             <Button Content="Convert" Height="60"

@@ -12,17 +12,29 @@ namespace HEICtoJpgConvert.ViewModel
     public class ConvertViewModel : ViewModelBase
     {
         #region UIVariable
-        private string _sourcePath;
-        public string SourcePath
+        private string _saveDirPath;
+        public string SaveDirPath
         {
-            get { return _sourcePath; }
-            set { _sourcePath = value; RaisePropertyChanged("SourcePath"); }
+            get { return _saveDirPath; }
+            set { _saveDirPath = value; RaisePropertyChanged("SaveDirPath"); }
         }
         private ObservableCollection<string> _collectionFileList = new ObservableCollection<string>();
         public ObservableCollection<string> CollectionFileList
         {
             get { return _collectionFileList; }
             set { _collectionFileList = value; }
+        }
+        private bool _saveDirCheck = false;
+        public bool SaveDirCheck
+        {
+            get { return _saveDirCheck; }
+            set { _saveDirCheck = value; RaisePropertyChanged("SaveDirCheck"); }
+        }
+        private bool _saveDirControlEnabled = false;
+        public bool SaveDirControlEnabled
+        {
+            get { return _saveDirControlEnabled; }
+            set { _saveDirControlEnabled = value; RaisePropertyChanged("SaveDirControlEnabled"); }
         }
         //private  _selectedListBoxItems = new List<string>();
         //public List<string> SelectedListBoxItems
@@ -34,13 +46,26 @@ namespace HEICtoJpgConvert.ViewModel
 
         #region Command
         public RelayCommand<object> ButtonClickCommand { get; private set; }
+        public RelayCommand<object> CheckBoxClickCommand { get; private set; }
 
         private void InitRelayCommand()
         {
-            ButtonClickCommand = new RelayCommand<object>((param) => OnButtonClick(param));
+            ButtonClickCommand = new RelayCommand<object>(OnButtonClick);
+            CheckBoxClickCommand = new RelayCommand<object>(OnCheckBoxClick);
         }
 
         #region CommandAction
+        private void OnCheckBoxClick(object param)
+        {
+            bool isCheck;
+
+            isCheck = (!SaveDirCheck) ? true : false;
+
+            SaveDirCheck = isCheck;
+            SaveDirControlEnabled = isCheck;
+
+            //if (!SaveDirCheck)
+        }
         private void OnButtonClick(object param)
         {
             switch (param.ToString())
@@ -79,7 +104,7 @@ namespace HEICtoJpgConvert.ViewModel
 
         private void DeleteFile_OnClick()
         {
-            MessageBox.Show("클릭");
+            MessageBox.Show(SaveDirControlEnabled.ToString());
         }
 
         /// <summary>
@@ -107,14 +132,17 @@ namespace HEICtoJpgConvert.ViewModel
 
         private void ConvertProcess(string srcPath)
         {
+            string saveDir = Path.Combine(Path.GetDirectoryName(srcPath), "SaveJPG");
+
+            if (SaveDirCheck)
+                saveDir = SaveDirPath;
+
+            DirectoryInfo dir = new DirectoryInfo(saveDir);
+            if (!dir.Exists)
+                dir.Create();
+
             using (MagickImage img = new MagickImage(srcPath))
             {
-                string saveDir = Path.Combine(Path.GetDirectoryName(srcPath), "SaveJPG");
-
-                DirectoryInfo dir = new DirectoryInfo(saveDir);
-                if (!dir.Exists)
-                    dir.Create();
-
                 string saveImgPath = Path.Combine(saveDir, Path.GetFileNameWithoutExtension(srcPath) + ".jpg");
                 img.Write(saveImgPath);
             }
