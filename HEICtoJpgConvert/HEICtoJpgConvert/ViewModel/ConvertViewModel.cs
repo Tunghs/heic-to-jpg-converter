@@ -94,6 +94,8 @@ namespace HEICtoJpgConvert.ViewModel
 
                 MessageBox.Show("Convert Success!");
             }
+
+            MessageBox.Show("No files to convert.", "Warning",MessageBoxButton.OK, MessageBoxImage.Warning);
         }
         #endregion       
         #endregion
