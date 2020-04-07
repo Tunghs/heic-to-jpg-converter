@@ -24,12 +24,12 @@ namespace HEICtoJpgConvert.ViewModel
             get { return _collectionFileList; }
             set { _collectionFileList = value; }
         }
-        private  _selectedListBoxItems = new List<string>();
-        public List<string> SelectedListBoxItems
-        {
-            get { return _selectedListBoxItems; }
-            set { _selectedListBoxItems = value; RaisePropertyChanged("SelectedListBoxItems"); }
-        }
+        //private  _selectedListBoxItems = new List<string>();
+        //public List<string> SelectedListBoxItems
+        //{
+        //    get { return _selectedListBoxItems; }
+        //    set { _selectedListBoxItems = value; RaisePropertyChanged("SelectedListBoxItems"); }
+        //}
         #endregion
 
         #region Command
@@ -46,10 +46,13 @@ namespace HEICtoJpgConvert.ViewModel
             switch (param.ToString())
             {
                 case "UploadFilesClick":
-                    UploadFilesClick();
+                    UploadFiles_OnClick();
                     break;
                 case "DeleteFileClick":
-                    DeleteFileClick();
+                    DeleteFile_OnClick();
+                    break;
+                case "Convert":
+                    ConvertProcess_OnClick();
                     break;
             }
         }
@@ -57,7 +60,7 @@ namespace HEICtoJpgConvert.ViewModel
         /// <summary>
         /// UploadFiles Button Click
         /// </summary>
-        private void UploadFilesClick()
+        private void UploadFiles_OnClick()
         {
             CommonOpenFileDialog dlg = new CommonOpenFileDialog();
 
@@ -74,39 +77,23 @@ namespace HEICtoJpgConvert.ViewModel
             }
         }
 
-        private void DeleteFileClick()
+        private void DeleteFile_OnClick()
         {
             MessageBox.Show("클릭");
-            foreach(string item in SelectedListBoxItems)
-                CollectionFileList.Remove(item);
         }
 
         /// <summary>
         /// 코드 수정 후 변경!
         /// </summary>
-        private void OnConvertProcess()
+        private void ConvertProcess_OnClick()
         {
-            if (File.Exists(SourcePath))
+            if (CollectionFileList.Count != 0)
             {
-                ConvertFile(SourcePath);
-                MessageBox.Show("Convert 완료");
-            }
-            else if (Directory.Exists(SourcePath))
-            {
-                ConvertDirectory(SourcePath);
-                MessageBox.Show("Convert 완료");
-            }
-            else
-            {
-                MessageBox.Show("경로를 다시 확인해주세요.");
-            }     
-        }
+                foreach (string filePath in CollectionFileList)
+                    ConvertProcess(filePath);
 
-        private void OnTest()
-        {
-            CommonOpenFileDialog dialog = new CommonOpenFileDialog();
-            dialog.InitialDirectory = "C:\\Users";
-            
+                MessageBox.Show("Convert Success!");
+            }
         }
         #endregion       
         #endregion
@@ -116,7 +103,7 @@ namespace HEICtoJpgConvert.ViewModel
             InitRelayCommand();
         }
 
-        private void ConvertFile(string srcPath)
+        private void ConvertProcess(string srcPath)
         {
             using (MagickImage img = new MagickImage(srcPath))
             {
@@ -128,16 +115,6 @@ namespace HEICtoJpgConvert.ViewModel
 
                 string saveImgPath = Path.Combine(saveDir, Path.GetFileNameWithoutExtension(srcPath) + ".jpg");
                 img.Write(saveImgPath);
-            }
-        }
-
-        private void ConvertDirectory(string srcPath)
-        {
-            DirectoryInfo dir = new DirectoryInfo(srcPath);
-            foreach (FileInfo file in dir.GetFiles())
-            {
-                if (file.Extension.ToLower() == ".heic")
-                    ConvertFile(file.FullName);
             }
         }
     }
