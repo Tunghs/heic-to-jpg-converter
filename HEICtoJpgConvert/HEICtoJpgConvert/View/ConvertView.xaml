@@ -21,9 +21,10 @@
                         Command="{Binding ButtonClickCommand}" CommandParameter="DeleteFileClick"/>
             </StackPanel>
 
-            <ListBox x:Name="FileList" FontSize="12" BorderThickness="1" Height="250" Margin="0 10"
-                     SelectionMode="Extended"
-                     ItemsSource="{Binding CollectionFileList}" SelectedItem="{Binding SelectedListBoxItem}"/>
+            <DataGrid x:Name="FileList" FontSize="12" BorderThickness="1" Height="250" Margin="0 10"
+                     SelectionMode="Extended"  SelectionUnit="FullRow"
+                     ItemsSource="{Binding CollectionFileList}" SelectedItem="{Binding SelectedListBoxItem, UpdateSourceTrigger=PropertyChanged}"
+                     />
 
             <Button Content="Convert" Height="60"
                     Command="{Binding ButtonClickCommand}" CommandParameter="test"/>
