@@ -5,7 +5,6 @@
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="FilePathTextBox.xaml" />
-        <ResourceDictionary Source="FileDragDropListView.xaml" />
         <!--아래로 주르륵 추가-->
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

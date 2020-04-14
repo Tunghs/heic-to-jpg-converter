@@ -5,17 +5,18 @@ using System.Windows;
 using ImageMagick;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace HEICtoJpgConvert.ViewModel
 {
     public class ConvertViewModel : ViewModelBase
     {
         #region UIVariable
-        private string _sourcePath;
-        public string SourcePath
+        private string _saveDirPath;
+        public string SaveDirPath
         {
-            get { return _sourcePath; }
-            set { _sourcePath = value; RaisePropertyChanged("SourcePath"); }
+            get { return _saveDirPath; }
+            set { _saveDirPath = value; RaisePropertyChanged("SaveDirPath"); }
         }
         private ObservableCollection<string> _collectionFileList = new ObservableCollection<string>();
         public ObservableCollection<string> CollectionFileList
@@ -23,32 +24,60 @@ namespace HEICtoJpgConvert.ViewModel
             get { return _collectionFileList; }
             set { _collectionFileList = value; }
         }
-        private string _selectedListBoxItem;
-        public string SelectedListBoxItem
+        private bool _saveDirCheck = false;
+        public bool SaveDirCheck
         {
-            get { return _selectedListBoxItem; }
-            set { _selectedListBoxItem = value; RaisePropertyChanged("SelectedListBoxItem"); }
+            get { return _saveDirCheck; }
+            set { _saveDirCheck = value; RaisePropertyChanged("SaveDirCheck"); }
         }
+        private bool _saveDirControlEnabled = false;
+        public bool SaveDirControlEnabled
+        {
+            get { return _saveDirControlEnabled; }
+            set { _saveDirControlEnabled = value; RaisePropertyChanged("SaveDirControlEnabled"); }
+        }
+        //private  _selectedListBoxItems = new List<string>();
+        //public List<string> SelectedListBoxItems
+        //{
+        //    get { return _selectedListBoxItems; }
+        //    set { _selectedListBoxItems = value; RaisePropertyChanged("SelectedListBoxItems"); }
+        //}
         #endregion
 
         #region Command
         public RelayCommand<object> ButtonClickCommand { get; private set; }
+        public RelayCommand<object> CheckBoxClickCommand { get; private set; }
 
         private void InitRelayCommand()
         {
-            ButtonClickCommand = new RelayCommand<object>((param) => OnButtonClick(param));
+            ButtonClickCommand = new RelayCommand<object>(OnButtonClick);
+            CheckBoxClickCommand = new RelayCommand<object>(OnCheckBoxClick);
         }
 
         #region CommandAction
+        private void OnCheckBoxClick(object param)
+        {
+            bool isCheck;
+
+            isCheck = (!SaveDirCheck) ? true : false;
+
+            SaveDirCheck = isCheck;
+            SaveDirControlEnabled = isCheck;
+
+            //if (!SaveDirCheck)
+        }
         private void OnButtonClick(object param)
         {
             switch (param.ToString())
             {
                 case "UploadFilesClick":
-                    UploadFilesClick();
+                    UploadFiles_OnClick();
                     break;
                 case "DeleteFileClick":
-                    DeleteFileClick();
+                    DeleteFile_OnClick();
+                    break;
+                case "Convert":
+                    ConvertProcess_OnClick();
                     break;
             }
         }
@@ -56,7 +85,7 @@ namespace HEICtoJpgConvert.ViewModel
         /// <summary>
         /// UploadFiles Button Click
         /// </summary>
-        private void UploadFilesClick()
+        private void UploadFiles_OnClick()
         {
             CommonOpenFileDialog dlg = new CommonOpenFileDialog();
 
@@ -73,38 +102,25 @@ namespace HEICtoJpgConvert.ViewModel
             }
         }
 
-        private void DeleteFileClick()
+        private void DeleteFile_OnClick()
         {
-            MessageBox.Show(SelectedListBoxItem);
-            // CollectionFileList.Remove(SelectedListBoxItem);
+            MessageBox.Show(SaveDirControlEnabled.ToString());
         }
 
         /// <summary>
         /// 코드 수정 후 변경!
         /// </summary>
-        private void OnConvertProcess()
+        private void ConvertProcess_OnClick()
         {
-            if (File.Exists(SourcePath))
+            if (CollectionFileList.Count != 0)
             {
-                ConvertFile(SourcePath);
-                MessageBox.Show("Convert 완료");
-            }
-            else if (Directory.Exists(SourcePath))
-            {
-                ConvertDirectory(SourcePath);
-                MessageBox.Show("Convert 완료");
-            }
-            else
-            {
-                MessageBox.Show("경로를 다시 확인해주세요.");
-            }     
-        }
+                foreach (string filePath in CollectionFileList)
+                    ConvertProcess(filePath);
 
-        private void OnTest()
-        {
-            CommonOpenFileDialog dialog = new CommonOpenFileDialog();
-            dialog.InitialDirectory = "C:\\Users";
-            
+                MessageBox.Show("Convert Success!");
+            }
+
+            MessageBox.Show("No files to convert.", "Warning",MessageBoxButton.OK, MessageBoxImage.Warning);
         }
         #endregion       
         #endregion
@@ -114,28 +130,21 @@ namespace HEICtoJpgConvert.ViewModel
             InitRelayCommand();
         }
 
-        private void ConvertFile(string srcPath)
+        private void ConvertProcess(string srcPath)
         {
+            string saveDir = Path.Combine(Path.GetDirectoryName(srcPath), "SaveJPG");
+
+            if (SaveDirCheck)
+                saveDir = SaveDirPath;
+
+            DirectoryInfo dir = new DirectoryInfo(saveDir);
+            if (!dir.Exists)
+                dir.Create();
+
             using (MagickImage img = new MagickImage(srcPath))
             {
-                string saveDir = Path.Combine(Path.GetDirectoryName(srcPath), "SaveJPG");
-
-                DirectoryInfo dir = new DirectoryInfo(saveDir);
-                if (!dir.Exists)
-                    dir.Create();
-
                 string saveImgPath = Path.Combine(saveDir, Path.GetFileNameWithoutExtension(srcPath) + ".jpg");
                 img.Write(saveImgPath);
-            }
-        }
-
-        private void ConvertDirectory(string srcPath)
-        {
-            DirectoryInfo dir = new DirectoryInfo(srcPath);
-            foreach (FileInfo file in dir.GetFiles())
-            {
-                if (file.Extension.ToLower() == ".heic")
-                    ConvertFile(file.FullName);
             }
         }
     }
