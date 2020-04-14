@@ -5,6 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:ViewModel="clr-namespace:HEICtoJpgConvert.ViewModel"
              xmlns:SHControls="clr-namespace:SHControls.Controls;assembly=SHControls"
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+             xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform"
              mc:Ignorable="d" 
              d:DesignHeight="460" d:DesignWidth="800">
     
@@ -23,7 +25,13 @@
 
             <ListBox x:Name="FileList" FontSize="12" BorderThickness="1" Height="230" Margin="0 5"
                      SelectionMode="Extended"
-                     ItemsSource="{Binding CollectionFileList}" SelectedItem="{Binding SelectedListBoxItems}"/>
+                     ItemsSource="{Binding CollectionFileList}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectionChanged">
+                        <cmd:EventToCommand Command="{Binding ListViewSelectCommand}" CommandParameter="{Binding SelectedItems, ElementName=FileList}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </ListBox>
 
             <StackPanel Orientation="Horizontal" Margin="0 0 0 5" HorizontalAlignment="Center">
                 <CheckBox Content="폴더 경로에 저장" VerticalContentAlignment="Center" Margin="0 0 20 0"
