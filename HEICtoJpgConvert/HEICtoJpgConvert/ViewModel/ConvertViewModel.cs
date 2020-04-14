@@ -7,8 +7,10 @@ using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using System.Collections;
 using System.Linq;
+using System.Diagnostics;
 
 using ImageMagick;
+using System;
 
 namespace HEICtoJpgConvert.ViewModel
 {
@@ -68,7 +70,6 @@ namespace HEICtoJpgConvert.ViewModel
         private void CheckBox_OnClick(object param)
         {
             bool isCheck;
-
             isCheck = (!SaveDirCheck) ? true : false;
 
             SaveDirCheck = isCheck;
@@ -114,8 +115,10 @@ namespace HEICtoJpgConvert.ViewModel
 
         private void DeleteFile_OnClick()
         {
-            // MessageBox.Show(SaveDirControlEnabled.ToString());
-            MessageBox.Show(SelectedListViewItems[0].ToString());
+            foreach (string item in SelectedListViewItems)
+            {
+                CollectionFileList.Remove(item);
+            }
         }
 
         /// <summary>
