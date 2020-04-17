@@ -132,6 +132,7 @@ namespace HEICtoJpgConvert.ViewModel
                     ConvertProcess(filePath);
 
                 MessageBox.Show("Convert Success!");
+                CollectionFileList.Clear();
             }
 
             MessageBox.Show("No files to convert.", "Warning",MessageBoxButton.OK, MessageBoxImage.Warning);
