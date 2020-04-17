@@ -37,7 +37,8 @@
                 <CheckBox Content="폴더 경로에 저장" VerticalContentAlignment="Center" Margin="0 0 20 0"
                           Command="{Binding CheckBoxClickCommand}"/>
                 <SHControls:FilePathTextBox ControlName="Save Dir Path" Width="610" FontSize="14" ISFolder="True" 
-                                            IsEnabled="{Binding SaveDirControlEnabled, Mode=TwoWay}"/>
+                                            IsEnabled="{Binding SaveDirControlEnabled, Mode=TwoWay}"
+                                            FilePath="{Binding SaveDirPath, Mode=TwoWay}"/>
             </StackPanel>
 
             <Button Content="Convert" Height="60"

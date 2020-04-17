@@ -74,8 +74,6 @@ namespace HEICtoJpgConvert.ViewModel
 
             SaveDirCheck = isCheck;
             SaveDirControlEnabled = isCheck;
-
-            //if (!SaveDirCheck)
         }
         private void OnButtonClick(object param)
         {
