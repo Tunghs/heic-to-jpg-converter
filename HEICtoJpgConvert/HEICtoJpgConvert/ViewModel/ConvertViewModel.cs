@@ -91,7 +91,7 @@ namespace HEICtoJpgConvert.ViewModel
                         if(!CollectionFileList.Contains(file))
                             CollectionFileList.Add(file);
                 }
-                    
+                ListViewBorderColor = (Brush)(new BrushConverter().ConvertFromString("LightGray"));
             }
         }
 
@@ -166,12 +166,19 @@ namespace HEICtoJpgConvert.ViewModel
         {
             if (CollectionFileList.Count != 0)
             {
-                foreach (string filePath in CollectionFileList)
-                    ConvertProcess(filePath);
+                List<string> fileList = new List<string>(CollectionFileList);
+                foreach(string file in fileList)
+                {
+                    ConvertProcess(file);
+                    CollectionFileList.Remove(file);
+                }
 
-                MessageBox.Show("Convert Success!");
-                CollectionFileList.Clear();
-            }
+                //foreach (string filePath in CollectionFileList)
+                //    ConvertProcess(filePath);
+
+                // CollectionFileList.Clear();
+                MessageBox.Show("Convert complete.", "Complete");
+            } 
             else
             {
                 MessageBox.Show("No files to convert.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
