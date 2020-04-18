@@ -11,6 +11,7 @@ using System.Diagnostics;
 
 using ImageMagick;
 using System;
+using System.Windows.Media;
 
 namespace HEICtoJpgConvert.ViewModel
 {
@@ -47,6 +48,12 @@ namespace HEICtoJpgConvert.ViewModel
             get { return _selectedListViewItems; }
             set { _selectedListViewItems = value; RaisePropertyChanged("SelectedListViewItems"); }
         }
+        private Brush _listViewBorderColor = (Brush)(new BrushConverter().ConvertFromString("LightGray"));
+        public Brush ListViewBorderColor
+        {
+            get { return _listViewBorderColor; }
+            set { _listViewBorderColor = value; RaisePropertyChanged("ListViewBorderColor"); }
+        }
         #endregion
 
         #region Command
@@ -81,7 +88,8 @@ namespace HEICtoJpgConvert.ViewModel
                 foreach (string file in files)
                 {
                     if (file.ToLower().Contains("heic"))
-                        CollectionFileList.Add(file);
+                        if(!CollectionFileList.Contains(file))
+                            CollectionFileList.Add(file);
                 }
                     
             }
@@ -89,12 +97,13 @@ namespace HEICtoJpgConvert.ViewModel
 
         private void OnListViewDragOver(DragEventArgs e)
         {
-
+            e.Handled = false;
+            ListViewBorderColor = (Brush)(new BrushConverter().ConvertFromString("Black"));
         }
 
         private void OnListViewDragLeave(DragEventArgs e)
         {
-
+            ListViewBorderColor = (Brush)(new BrushConverter().ConvertFromString("LightGray"));
         }
 
         private void CheckBox_OnClick(object param)
@@ -137,7 +146,8 @@ namespace HEICtoJpgConvert.ViewModel
             if (dlg.ShowDialog() == CommonFileDialogResult.Ok)
             {
                 foreach (string file in dlg.FileNames)
-                    CollectionFileList.Add(file);
+                    if (!CollectionFileList.Contains(file))
+                        CollectionFileList.Add(file);
             }
         }
 
