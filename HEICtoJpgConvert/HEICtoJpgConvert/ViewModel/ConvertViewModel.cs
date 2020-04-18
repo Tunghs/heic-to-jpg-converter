@@ -53,18 +53,44 @@ namespace HEICtoJpgConvert.ViewModel
         public RelayCommand<object> ButtonClickCommand { get; private set; }
         public RelayCommand<object> CheckBoxClickCommand { get; private set; }
         public RelayCommand<IList> ListViewSelectCommand { get; private set; }
+        public RelayCommand<DragEventArgs> ListViewDropCommand { get; private set; }
+        public RelayCommand<DragEventArgs> ListViewDragOverCommand { get; private set; }
+        public RelayCommand<DragEventArgs> ListViewDragLeaveCommand { get; private set; }
 
         private void InitRelayCommand()
         {
             ButtonClickCommand = new RelayCommand<object>(OnButtonClick);
             CheckBoxClickCommand = new RelayCommand<object>(CheckBox_OnClick);
             ListViewSelectCommand = new RelayCommand<IList>(ListViewSelect);
+            ListViewDropCommand = new RelayCommand<DragEventArgs>(OnListViewDrop);
+            ListViewDragOverCommand = new RelayCommand<DragEventArgs>(OnListViewDragOver);
+            ListViewDragLeaveCommand = new RelayCommand<DragEventArgs>(OnListViewDragLeave);
         }
 
         #region CommandAction
         private void ListViewSelect(IList param)
         {
             SelectedListViewItems = param.Cast<string>().ToList();
+        }
+
+        private void OnListViewDrop(DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+                foreach (string file in files)
+                    CollectionFileList.Add(file);
+            }
+        }
+
+        private void OnListViewDragOver(DragEventArgs e)
+        {
+
+        }
+
+        private void OnListViewDragLeave(DragEventArgs e)
+        {
+
         }
 
         private void CheckBox_OnClick(object param)
@@ -132,8 +158,10 @@ namespace HEICtoJpgConvert.ViewModel
                 MessageBox.Show("Convert Success!");
                 CollectionFileList.Clear();
             }
-
-            MessageBox.Show("No files to convert.", "Warning",MessageBoxButton.OK, MessageBoxImage.Warning);
+            else
+            {
+                MessageBox.Show("No files to convert.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
         }
         #endregion       
         #endregion
