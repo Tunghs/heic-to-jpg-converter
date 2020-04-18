@@ -108,9 +108,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Helpers\ListViewHelper.cs" />
-    <Compile Include="Helpers\NotifyCollectionChangedHelper.cs" />
-    <Compile Include="Helpers\SelectedItemsHelper.cs" />
     <Compile Include="ViewModel\ConvertViewModel.cs" />
     <Compile Include="View\ConvertView.xaml.cs">
       <DependentUpon>ConvertView.xaml</DependentUpon>
