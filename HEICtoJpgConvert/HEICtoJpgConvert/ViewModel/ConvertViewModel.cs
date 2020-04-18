@@ -79,7 +79,11 @@ namespace HEICtoJpgConvert.ViewModel
             {
                 string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
                 foreach (string file in files)
-                    CollectionFileList.Add(file);
+                {
+                    if (file.ToLower().Contains("heic"))
+                        CollectionFileList.Add(file);
+                }
+                    
             }
         }
 
