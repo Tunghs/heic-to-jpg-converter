@@ -8,10 +8,13 @@ using System.Collections.Generic;
 using System.Collections;
 using System.Linq;
 using System.Diagnostics;
-
+using System.Threading;
+using System.Windows.Threading;
+using System.Windows.Media;
+using MahApps.Metro.Controls;
 using ImageMagick;
 using System;
-using System.Windows.Media;
+
 
 namespace HEICtoJpgConvert.ViewModel
 {
@@ -171,6 +174,7 @@ namespace HEICtoJpgConvert.ViewModel
                 {
                     ConvertProcess(file);
                     CollectionFileList.Remove(file);
+                    ((MetroWindow)Application.Current.MainWindow).Dispatcher.Invoke((ThreadStart)(()=>{ }), DispatcherPriority.ApplicationIdle);
                 }
 
                 //foreach (string filePath in CollectionFileList)
