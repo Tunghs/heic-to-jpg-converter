@@ -14,7 +14,9 @@ using System.Windows.Media;
 using MahApps.Metro.Controls;
 using ImageMagick;
 using System;
-
+using System.Threading.Tasks;
+using System.ComponentModel;
+using System.Windows.Input;
 
 namespace HEICtoJpgConvert.ViewModel
 {
@@ -188,12 +190,53 @@ namespace HEICtoJpgConvert.ViewModel
                 MessageBox.Show("No files to convert.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
-        #endregion       
+        #endregion
+        #endregion
+
+        #region Progress Bar
+        private readonly BackgroundWorker worker;
+        private readonly ICommand _instigateWorkCommand;
+        public ICommand InstigateWorkCommand
+        {
+            get { return _instigateWorkCommand; }
+        }
+        private int _currentProgress;
+        public int CurrentProgress
+        {
+            get { return _currentProgress; }
+            private set 
+            { 
+                if(_currentProgress != value)
+                {
+                    _currentProgress = value;
+                    RaisePropertyChanged("CurrentProgress");
+                }
+            }
+        }
+        private void ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            CurrentProgress = e.ProgressPercentage;
+        }
+
+        private void DoWork(object sender, DoWorkEventArgs e)
+        {
+            for(int i = 0; i < 100; i++)
+            {
+                Thread.Sleep(1000);
+                _currentProgress = i;
+                RaisePropertyChanged("CurrentProgress");
+            }
+        }
         #endregion
 
         public ConvertViewModel()
         {
             InitRelayCommand();
+
+            _instigateWorkCommand = new RelayCommand(o => worker.RunWorkerAsync(), o => !worker.IsBusy);
+            worker = new BackgroundWorker();
+            worker.DoWork += DoWork;
+            worker.ProgressChanged += ProgressChanged;
         }
 
         private void ConvertProcess(string srcPath)
