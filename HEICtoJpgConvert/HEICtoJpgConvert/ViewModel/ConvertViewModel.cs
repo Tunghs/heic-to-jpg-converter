@@ -59,6 +59,19 @@ namespace HEICtoJpgConvert.ViewModel
             get { return _listViewBorderColor; }
             set { _listViewBorderColor = value; RaisePropertyChanged("ListViewBorderColor"); }
         }
+        private int _currentProgress;
+        public int CurrentProgress
+        {
+            get { return _currentProgress; }
+            private set
+            {
+                if (_currentProgress != value)
+                {
+                    _currentProgress = value;
+                    RaisePropertyChanged("CurrentProgress");
+                }
+            }
+        }
         #endregion
 
         #region Command
@@ -194,49 +207,36 @@ namespace HEICtoJpgConvert.ViewModel
         #endregion
 
         #region Progress Bar
-        private readonly BackgroundWorker worker;
-        private readonly ICommand _instigateWorkCommand;
-        public ICommand InstigateWorkCommand
-        {
-            get { return _instigateWorkCommand; }
-        }
-        private int _currentProgress;
-        public int CurrentProgress
-        {
-            get { return _currentProgress; }
-            private set 
-            { 
-                if(_currentProgress != value)
-                {
-                    _currentProgress = value;
-                    RaisePropertyChanged("CurrentProgress");
-                }
-            }
-        }
-        private void ProgressChanged(object sender, ProgressChangedEventArgs e)
+        private void worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             CurrentProgress = e.ProgressPercentage;
+            TextBlockText = (string)e.UserState;
         }
 
-        private void DoWork(object sender, DoWorkEventArgs e)
+        private void worker_DoWork(object sender, DoWorkEventArgs e)
         {
-            for(int i = 0; i < 100; i++)
+            var worker = sender as BackgroundWorker;
+            worker.ReportProgress(0, String.Format("Processing Iteration 1."));
+            for (int i = 0; i < 100; i++)
             {
-                Thread.Sleep(1000);
-                _currentProgress = i;
-                RaisePropertyChanged("CurrentProgress");
+                Thread.Sleep(100);
+                worker.ReportProgress((i + 1), String.Format("Processing Iteration {0}.", i + 2));
             }
+
+            worker.ReportProgress(100, "Done Processing.");
+        }
+
+        private void worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            MessageBox.Show("All Done!");
+            CurrentProgress = 0;
+            TextBlockText = "";
         }
         #endregion
 
         public ConvertViewModel()
         {
             InitRelayCommand();
-
-            _instigateWorkCommand = new RelayCommand(o => worker.RunWorkerAsync(), o => !worker.IsBusy);
-            worker = new BackgroundWorker();
-            worker.DoWork += DoWork;
-            worker.ProgressChanged += ProgressChanged;
         }
 
         private void ConvertProcess(string srcPath)
