@@ -184,18 +184,18 @@ namespace HEICtoJpgConvert.ViewModel
         {
             if (CollectionFileList.Count != 0)
             {
-                List<string> fileList = new List<string>(CollectionFileList);
-                foreach(string file in fileList)
-                {
-                    ConvertProcess(file);
-                    CollectionFileList.Remove(file);
-                    ((MetroWindow)Application.Current.MainWindow).Dispatcher.Invoke((ThreadStart)(()=>{ }), DispatcherPriority.ApplicationIdle);
-                }
+                //List<string> fileList = new List<string>(CollectionFileList);
+                //foreach(string file in fileList)
+                //{
+                //    ConvertProcess(file);
+                //    CollectionFileList.Remove(file);
+                //    // 실시간 ui 업데이트
+                //    // ((MetroWindow)Application.Current.MainWindow).Dispatcher.Invoke((ThreadStart)(()=>{ }), DispatcherPriority.ApplicationIdle);
+                //}
+                foreach (string filePath in CollectionFileList)
+                    ConvertProcess(filePath);
 
-                //foreach (string filePath in CollectionFileList)
-                //    ConvertProcess(filePath);
-
-                // CollectionFileList.Clear();
+                CollectionFileList.Clear();
                 MessageBox.Show("Convert complete.", "Complete");
             } 
             else
