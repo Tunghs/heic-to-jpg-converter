@@ -210,7 +210,7 @@ namespace HEICtoJpgConvert.ViewModel
         private void worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             CurrentProgress = e.ProgressPercentage;
-            TextBlockText = (string)e.UserState;
+            //TextBlockText = (string)e.UserState;
         }
 
         private void worker_DoWork(object sender, DoWorkEventArgs e)
@@ -230,7 +230,7 @@ namespace HEICtoJpgConvert.ViewModel
         {
             MessageBox.Show("All Done!");
             CurrentProgress = 0;
-            TextBlockText = "";
+            //TextBlockText = "";
         }
         #endregion
 

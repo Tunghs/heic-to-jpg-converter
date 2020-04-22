@@ -53,8 +53,8 @@
                         Command="{Binding ButtonClickCommand}" CommandParameter="DeleteFileClick"/>
             </StackPanel>
 
-            <Controls:MetroProgressBar Margin="0 5 0 0" Height="20" IsIndeterminate="True" 
-                                       Value="{Binding }" Visibility="{Binding }"/>
+            <ProgressBar Grid.Row="1" Height="20" Margin="0 5 0 0" Visibility="Collapsed"
+                         Value="{Binding CurrentProgress, Mode=OneWay}"/>
 
             <ListView x:Name="FileList" FontSize="12" BorderThickness="1" Height="210" Margin="0 5"
                      SelectionMode="Extended" AllowDrop="True" BorderBrush="{Binding ListViewBorderColor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
