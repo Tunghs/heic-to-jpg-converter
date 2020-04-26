@@ -18,8 +18,7 @@ using System.Threading.Tasks;
 using System.ComponentModel;
 using System.Windows.Input;
 using MahApps.Metro.SimpleChildWindow;
-
-using HEICtoJpgConvert.View;
+using MahApps.Metro.SimpleChildWindow.ValueConverter;
 
 namespace HEICtoJpgConvert.ViewModel
 {
