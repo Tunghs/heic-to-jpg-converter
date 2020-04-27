@@ -11,14 +11,17 @@ using System.Diagnostics;
 using System.Threading;
 using System.Windows.Threading;
 using System.Windows.Media;
-using MahApps.Metro.Controls;
 using ImageMagick;
 using System;
 using System.Threading.Tasks;
 using System.ComponentModel;
 using System.Windows.Input;
 using MahApps.Metro.SimpleChildWindow;
-using MahApps.Metro.SimpleChildWindow.ValueConverter;
+using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
+
+using HEICtoJpgConvert.View;
+using HEICtoJpgConvert.Properties;
 
 namespace HEICtoJpgConvert.ViewModel
 {
@@ -184,7 +187,7 @@ namespace HEICtoJpgConvert.ViewModel
         /// </summary>
         private async void ConvertProcess_OnClick()
         {
-            await ((MetroWindow)Application.Current.MainWindow).ShowChildWindowAsync(new ProgressBarChildView());
+            await ((MetroWindow)Application.Current.MainWindow).ShowChildWindowAsync(new ProgressBarChildView);
             //if (CollectionFileList.Count != 0)
             //{
             //    //List<string> fileList = new List<string>(CollectionFileList);
