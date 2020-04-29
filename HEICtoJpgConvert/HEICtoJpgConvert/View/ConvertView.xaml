@@ -7,11 +7,10 @@
              xmlns:SHControls="clr-namespace:SHControls.Controls;assembly=SHControls"
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform"
-             xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              mc:Ignorable="d" d:DesignHeight="460" d:DesignWidth="800">
-    
+
     <UserControl.DataContext>
-        <ViewModel:ConvertViewModel/>
+        <ViewModel:Class1/>
     </UserControl.DataContext>
 
     <UserControl.Resources>

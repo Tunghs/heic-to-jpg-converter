@@ -20,8 +20,6 @@ using MahApps.Metro.SimpleChildWindow;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 
-using HEICtoJpgConvert.View;
-
 namespace HEICtoJpgConvert.ViewModel
 {
     public class ConvertViewModel : ViewModelBase
@@ -186,7 +184,7 @@ namespace HEICtoJpgConvert.ViewModel
         /// </summary>
         private async void ConvertProcess_OnClick()
         {
-            await ((MetroWindow)Application.Current.MainWindow).ShowChildWindowAsync(new ProgressBarChildView());
+            //await ((MetroWindow)Application.Current.MainWindow).ShowChildWindowAsync(new ProgressBarChildView());
             //if (CollectionFileList.Count != 0)
             //{
             //    //List<string> fileList = new List<string>(CollectionFileList);

@@ -5,7 +5,6 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:View="clr-namespace:HEICtoJpgConvert.View"
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-        xmlns:SimpleChildWindow="clr-namespace:MahApps.Metro.SimpleChildWindow;assembly=MahApps.Metro.SimpleChildWindow"
         mc:Ignorable="d"
         Title="HEIC to JPG Converter" Height="460" Width="800" ResizeMode="NoResize"
         WindowTitleBrush="#666666" GlowBrush="#666666">
