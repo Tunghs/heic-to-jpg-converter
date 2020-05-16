@@ -1,24 +1,17 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
-using System.IO;
-using System.Windows;
-using Microsoft.WindowsAPICodePack.Dialogs;
-using System.Collections.ObjectModel;
-using System.Collections.Generic;
-using System.Collections;
-using System.Linq;
-using System.Diagnostics;
-using System.Threading;
-using System.Windows.Threading;
-using System.Windows.Media;
 using ImageMagick;
+using Microsoft.WindowsAPICodePack.Dialogs;
 using System;
-using System.Threading.Tasks;
+using System.Collections;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Windows.Input;
-using MahApps.Metro.SimpleChildWindow;
-using MahApps.Metro.Controls;
-using MahApps.Metro.Controls.Dialogs;
+using System.IO;
+using System.Linq;
+using System.Threading;
+using System.Windows;
+using System.Windows.Media;
 
 namespace HEICtoJpgConvert.ViewModel
 {
@@ -108,7 +101,7 @@ namespace HEICtoJpgConvert.ViewModel
                 foreach (string file in files)
                 {
                     if (file.ToLower().Contains("heic"))
-                        if(!CollectionFileList.Contains(file))
+                        if (!CollectionFileList.Contains(file))
                             CollectionFileList.Add(file);
                 }
                 ListViewBorderColor = (Brush)(new BrushConverter().ConvertFromString("LightGray"));

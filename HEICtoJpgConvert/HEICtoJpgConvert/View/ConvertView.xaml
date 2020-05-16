@@ -10,9 +10,9 @@
              mc:Ignorable="d" d:DesignHeight="460" d:DesignWidth="800">
 
     <UserControl.DataContext>
-        <ViewModel:Class1/>
+        <ViewModel:ConvertViewModel/>
     </UserControl.DataContext>
-
+    
     <UserControl.Resources>
         <Style x:Key="ListViewItemStyle" TargetType="{x:Type ListViewItem}">
             <Setter Property="Template">
