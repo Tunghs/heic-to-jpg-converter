@@ -1,3 +1,3 @@
 # WPF_MVVM_HEIC_to_JPG_Convert
 
-Program to convert Hiec extension image of iPhone to jpg
+IPhone HEIC file JPG conversion program implemented with WPF MVVM pattern
