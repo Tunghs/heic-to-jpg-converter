@@ -5,7 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:SimpleChildWindow="clr-namespace:MahApps.Metro.SimpleChildWindow;assembly=MahApps.Metro.SimpleChildWindow"
              mc:Ignorable="d" Title="Loading..." d:DesignHeight="200" d:DesignWidth="400"
-             ChildWindowHeight="200" ChildWindowWidth="400">
+             ChildWindowHeight="200" ChildWindowWidth="400" ShowCloseButton="True" OverlayBrush="Transparent"
+             GlowBrush="#666666" TitleBarBackground="#666666" TitleForeground="White">
     <Grid>
         <TextBlock Text="hihi" HorizontalAlignment="Center" VerticalAlignment="Center"/>
     </Grid>
