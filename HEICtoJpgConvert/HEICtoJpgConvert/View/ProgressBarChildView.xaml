@@ -1,0 +1,12 @@
+﻿<SimpleChildWindow:ChildWindow x:Class="HEICtoJpgConvert.View.ProgressBarChildView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:SimpleChildWindow="clr-namespace:MahApps.Metro.SimpleChildWindow;assembly=MahApps.Metro.SimpleChildWindow"
+             mc:Ignorable="d" Title="Loading..." d:DesignHeight="200" d:DesignWidth="400"
+             ChildWindowHeight="200" ChildWindowWidth="400">
+    <Grid>
+        <TextBlock Text="hihi" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+    </Grid>
+</SimpleChildWindow:ChildWindow>

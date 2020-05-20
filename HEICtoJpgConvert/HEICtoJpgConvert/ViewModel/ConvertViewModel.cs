@@ -1,7 +1,9 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using HEICtoJpgConvert.View;
 using ImageMagick;
 using MahApps.Metro.Controls;
+using MahApps.Metro.SimpleChildWindow;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using System;
 using System.Collections;
@@ -178,27 +180,27 @@ namespace HEICtoJpgConvert.ViewModel
         /// </summary>
         private async void ConvertProcess_OnClick()
         {
-            //await ((MetroWindow)Application.Current.MainWindow).ShowChildWindowAsync(new ProgressBarChildView());
-            if (CollectionFileList.Count != 0)
-            {
-                //List<string> fileList = new List<string>(CollectionFileList);
-                //foreach(string file in fileList)
-                //{
-                //    ConvertProcess(file);
-                //    CollectionFileList.Remove(file);
-                //    // 실시간 ui 업데이트
-                //    // ((MetroWindow)Application.Current.MainWindow).Dispatcher.Invoke((ThreadStart)(()=>{ }), DispatcherPriority.ApplicationIdle);
-                //}
-                foreach (string filePath in CollectionFileList)
-                    ConvertProcess(filePath);
+            await ((MetroWindow)Application.Current.MainWindow).ShowChildWindowAsync(new ProgressBarChildView());
+            //if (CollectionFileList.Count != 0)
+            //{
+            //    //List<string> fileList = new List<string>(CollectionFileList);
+            //    //foreach(string file in fileList)
+            //    //{
+            //    //    ConvertProcess(file);
+            //    //    CollectionFileList.Remove(file);
+            //    //    // 실시간 ui 업데이트
+            //    //    // ((MetroWindow)Application.Current.MainWindow).Dispatcher.Invoke((ThreadStart)(()=>{ }), DispatcherPriority.ApplicationIdle);
+            //    //}
+            //    foreach (string filePath in CollectionFileList)
+            //        ConvertProcess(filePath);
 
-                CollectionFileList.Clear();
-                MessageBox.Show("Convert complete.", "Complete");
-            }
-            else
-            {
-                MessageBox.Show("No files to convert.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
-            }
+            //    CollectionFileList.Clear();
+            //    MessageBox.Show("Convert complete.", "Complete");
+            //}
+            //else
+            //{
+            //    MessageBox.Show("No files to convert.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+            //}
         }
         #endregion
         #endregion
