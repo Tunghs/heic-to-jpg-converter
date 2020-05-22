@@ -178,9 +178,9 @@ namespace HEICtoJpgConvert.ViewModel
         /// <summary>
         /// 코드 수정 후 변경!
         /// </summary>
-        private async void ConvertProcess_OnClick()
+        private void ConvertProcess_OnClick()
         {
-            await ((MetroWindow)Application.Current.MainWindow).ShowChildWindowAsync(new ProgressBarChildView());
+            ((MetroWindow)Application.Current.MainWindow).ShowChildWindowAsync(new ProgressBarChildView());
             //if (CollectionFileList.Count != 0)
             //{
             //    //List<string> fileList = new List<string>(CollectionFileList);
