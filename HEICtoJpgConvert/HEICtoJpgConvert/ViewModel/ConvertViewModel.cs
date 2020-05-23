@@ -27,29 +27,29 @@ namespace HEICtoJpgConvert.ViewModel
             get { return _saveDirPath; }
             set { _saveDirPath = value; RaisePropertyChanged("SaveDirPath"); }
         }
-        private ObservableCollection<string> _collectionFileList = new ObservableCollection<string>();
-        public ObservableCollection<string> CollectionFileList
+        private ObservableCollection<string> _converFileList = new ObservableCollection<string>();
+        public ObservableCollection<string> ConvertFileList
         {
-            get { return _collectionFileList; }
-            set { _collectionFileList = value; }
-        }
-        private bool _saveDirCheck = false;
-        public bool SaveDirCheck
-        {
-            get { return _saveDirCheck; }
-            set { _saveDirCheck = value; RaisePropertyChanged("SaveDirCheck"); }
-        }
-        private bool _saveDirControlEnabled = false;
-        public bool SaveDirControlEnabled
-        {
-            get { return _saveDirControlEnabled; }
-            set { _saveDirControlEnabled = value; RaisePropertyChanged("SaveDirControlEnabled"); }
+            get { return _converFileList; }
+            set { _converFileList = value; }
         }
         private List<string> _selectedListViewItems = new List<string>();
         public List<string> SelectedListViewItems
         {
             get { return _selectedListViewItems; }
             set { _selectedListViewItems = value; RaisePropertyChanged("SelectedListViewItems"); }
+        }
+        private bool _isSaveDirChecked = false;
+        public bool IsSaveDirChecked
+        {
+            get { return _isSaveDirChecked; }
+            set { _isSaveDirChecked = value; RaisePropertyChanged("IsSaveDirChecked"); }
+        }
+        private bool _isChecked;
+        public bool IsChecked
+        {
+            get { return _isChecked; }
+            set { _isChecked = value; RaisePropertyChanged("IsChecked"); }
         }
         private Brush _listViewBorderColor = (Brush)(new BrushConverter().ConvertFromString("LightGray"));
         public Brush ListViewBorderColor
@@ -84,14 +84,16 @@ namespace HEICtoJpgConvert.ViewModel
         {
             ButtonClickCommand = new RelayCommand<object>(OnButtonClick);
             CheckBoxClickCommand = new RelayCommand<object>(CheckBox_OnClick);
-            ListViewSelectCommand = new RelayCommand<IList>(ListViewSelect);
+            ListViewSelectCommand = new RelayCommand<IList>(ReceiveListViewSelectItems);
             ListViewDropCommand = new RelayCommand<DragEventArgs>(OnListViewDrop);
             ListViewDragOverCommand = new RelayCommand<DragEventArgs>(OnListViewDragOver);
             ListViewDragLeaveCommand = new RelayCommand<DragEventArgs>(OnListViewDragLeave);
         }
 
         #region CommandAction
-        private void ListViewSelect(IList param)
+
+        // Receive multiple items of list view
+        private void ReceiveListViewSelectItems(IList param)
         {
             SelectedListViewItems = param.Cast<string>().ToList();
         }
@@ -104,8 +106,8 @@ namespace HEICtoJpgConvert.ViewModel
                 foreach (string file in files)
                 {
                     if (file.ToLower().Contains("heic"))
-                        if (!CollectionFileList.Contains(file))
-                            CollectionFileList.Add(file);
+                        if (!ConvertFileList.Contains(file))
+                            ConvertFileList.Add(file);
                 }
                 ListViewBorderColor = (Brush)(new BrushConverter().ConvertFromString("LightGray"));
             }
@@ -113,7 +115,7 @@ namespace HEICtoJpgConvert.ViewModel
 
         private void OnListViewDragOver(DragEventArgs e)
         {
-            e.Handled = false;
+            e.Handled = true;
             ListViewBorderColor = (Brush)(new BrushConverter().ConvertFromString("Black"));
         }
 
@@ -125,11 +127,10 @@ namespace HEICtoJpgConvert.ViewModel
         private void CheckBox_OnClick(object param)
         {
             bool isCheck;
-            isCheck = (!SaveDirCheck) ? true : false;
-
-            SaveDirCheck = isCheck;
-            SaveDirControlEnabled = isCheck;
+            isCheck = (!IsSaveDirChecked) ? true : false;
+            IsSaveDirChecked = isCheck;
         }
+
         private void OnButtonClick(object param)
         {
             switch (param.ToString())
@@ -162,8 +163,8 @@ namespace HEICtoJpgConvert.ViewModel
             if (dlg.ShowDialog() == CommonFileDialogResult.Ok)
             {
                 foreach (string file in dlg.FileNames)
-                    if (!CollectionFileList.Contains(file))
-                        CollectionFileList.Add(file);
+                    if (!ConvertFileList.Contains(file))
+                        ConvertFileList.Add(file);
             }
         }
 
@@ -171,7 +172,7 @@ namespace HEICtoJpgConvert.ViewModel
         {
             foreach (string item in SelectedListViewItems)
             {
-                CollectionFileList.Remove(item);
+                ConvertFileList.Remove(item);
             }
         }
 
@@ -242,7 +243,7 @@ namespace HEICtoJpgConvert.ViewModel
         {
             string saveDir = Path.Combine(Path.GetDirectoryName(srcPath), "SaveJPG");
 
-            if (SaveDirCheck)
+            if (IsSaveDirChecked)
                 saveDir = SaveDirPath;
 
             DirectoryInfo dir = new DirectoryInfo(saveDir);

@@ -46,7 +46,7 @@
     <Grid>
         <StackPanel Orientation="Vertical" Margin="10" VerticalAlignment="Center" HorizontalAlignment="Center" Width="750">
             <StackPanel Orientation="Horizontal" Height="60">
-                <Button Content="Upload Files..." Width="370"
+                <Button Content="Upload File" Width="370"
                         Command="{Binding ButtonClickCommand}" CommandParameter="UploadFilesClick"/>
                 <Button Content="Delete File" Width="370" Margin="10 0"
                         Command="{Binding ButtonClickCommand}" CommandParameter="DeleteFileClick"/>
@@ -54,7 +54,7 @@
 
             <ListView x:Name="FileList" FontSize="12" BorderThickness="1" Height="210" Margin="0 5"
                      SelectionMode="Extended" AllowDrop="True" BorderBrush="{Binding ListViewBorderColor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                     ItemsSource="{Binding CollectionFileList}" ItemContainerStyle="{StaticResource ListViewItemStyle}">
+                     ItemsSource="{Binding ConvertFileList}" ItemContainerStyle="{StaticResource ListViewItemStyle}">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="SelectionChanged">
                         <cmd:EventToCommand Command="{Binding ListViewSelectCommand}" CommandParameter="{Binding SelectedItems, ElementName=FileList}"/>
@@ -75,7 +75,7 @@
                 <CheckBox Content="폴더 경로에 저장" VerticalContentAlignment="Center" Margin="0 0 20 0"
                           Command="{Binding CheckBoxClickCommand}"/>
                 <SHControls:FilePathTextBox ControlName="Save Dir Path" Width="610" FontSize="14" ISFolder="True" 
-                                            IsEnabled="{Binding SaveDirControlEnabled, Mode=TwoWay}"
+                                            IsEnabled="{Binding IsSaveDirChecked, Mode=TwoWay}"
                                             FilePath="{Binding SaveDirPath, Mode=TwoWay}"/>
             </StackPanel>
 
