@@ -13,6 +13,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 
@@ -176,14 +177,38 @@ namespace HEICtoJpgConvert.ViewModel
             }
         }
 
-        
-        /// <summary>
-        /// 코드 수정 후 변경!
-        /// </summary>
+        private CancellationTokenSource _CanceltokenCource;
         private void ConvertProcess_OnClick()
         {
-            
             ((MetroWindow)Application.Current.MainWindow).ShowChildWindowAsync(new ProgressBarChildView() { DataContext = ProgerssBarChild });
+
+            if(ConvertFileList.Count != 0)
+            {
+                List<string> fileList = new List<string>(ConvertFileList);
+                int num = 0;
+
+                CancellationToken cancelToken = _CanceltokenCource.Token;
+                Task.Run(() =>
+                {
+                    try
+                    {
+                        foreach (string file in fileList)
+                        {
+                            RunConvertProcess(file);
+                            int ff = num / fileList.Count;
+                        }
+                    }
+                    catch (OperationCanceledException)
+                    {
+                        MessageBox.Show("취소하셨습니다.");
+                    }
+                });
+            }
+            else
+            {
+                MessageBox.Show("No files to convert.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+
             // ((MetroWindow)Application.Current.MainWindow).ShowChildWindowAsync(new ProgressBarChildView());
             //if (CollectionFileList.Count != 0)
             //{
@@ -233,7 +258,6 @@ namespace HEICtoJpgConvert.ViewModel
         {
             MessageBox.Show("All Done!");
             CurrentProgress = 0;
-            //TextBlockText = "";
         }
         #endregion
 
@@ -242,11 +266,10 @@ namespace HEICtoJpgConvert.ViewModel
         public ConvertViewModel()
         {
             ProgerssBarChild = new ProgressBarChildViewModel();
-
             InitRelayCommand();
         }
 
-        private void ConvertProcess(string srcPath)
+        private void RunConvertProcess(string srcPath)
         {
             string saveDir = Path.Combine(Path.GetDirectoryName(srcPath), "SaveJPG");
 
