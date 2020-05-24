@@ -157,7 +157,7 @@ namespace HEICtoJpgConvert.ViewModel
             dlg.Title = "Select the HEIC Files";
             dlg.InitialDirectory = "C:\\";
             dlg.Filters.Add(new CommonFileDialogFilter("HEIC Files", "*.heic"));
-            // 다중 파일 선택 기능.
+            // 다중 파일 선택 기능.m
             dlg.Multiselect = true;
 
             if (dlg.ShowDialog() == CommonFileDialogResult.Ok)
@@ -176,12 +176,15 @@ namespace HEICtoJpgConvert.ViewModel
             }
         }
 
+        
         /// <summary>
         /// 코드 수정 후 변경!
         /// </summary>
         private void ConvertProcess_OnClick()
         {
-            ((MetroWindow)Application.Current.MainWindow).ShowChildWindowAsync(new ProgressBarChildView());
+            
+            ((MetroWindow)Application.Current.MainWindow).ShowChildWindowAsync(new ProgressBarChildView() { DataContext = ProgerssBarChild });
+            // ((MetroWindow)Application.Current.MainWindow).ShowChildWindowAsync(new ProgressBarChildView());
             //if (CollectionFileList.Count != 0)
             //{
             //    //List<string> fileList = new List<string>(CollectionFileList);
@@ -234,8 +237,12 @@ namespace HEICtoJpgConvert.ViewModel
         }
         #endregion
 
+        public ProgressBarChildViewModel ProgerssBarChild { get; set; }
+
         public ConvertViewModel()
         {
+            ProgerssBarChild = new ProgressBarChildViewModel();
+
             InitRelayCommand();
         }
 

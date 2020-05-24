@@ -7,9 +7,10 @@
              mc:Ignorable="d" Title="Loading..." d:DesignHeight="200" d:DesignWidth="400"
              ChildWindowHeight="200" ChildWindowWidth="400" ShowCloseButton="True" OverlayBrush="Transparent"
              GlowBrush="#666666" TitleBarBackground="#666666" TitleForeground="White">
-    <Grid>
-        <TextBlock Text="hihi" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        <ProgressBar Grid.Row="1" Height="20" Margin="0 5 0 0" Visibility="Collapsed"
-                         Value="{Binding CurrentProgress, Mode=OneWay}"/>
+
+        <Grid>
+        <TextBlock Text="{Binding SaveDirPath}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <ProgressBar Grid.Row="1" Height="20" Margin="0 5 0 0" Visibility="Hidden"
+                     Value="{Binding CurrentProgress, Mode=OneWay}"/>
     </Grid>
 </SimpleChildWindow:ChildWindow>
