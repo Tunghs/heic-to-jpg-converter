@@ -58,19 +58,6 @@ namespace HEICtoJpgConvert.ViewModel
             get { return _listViewBorderColor; }
             set { _listViewBorderColor = value; RaisePropertyChanged("ListViewBorderColor"); }
         }
-        private int _currentProgress;
-        public int CurrentProgress
-        {
-            get { return _currentProgress; }
-            private set
-            {
-                if (_currentProgress != value)
-                {
-                    _currentProgress = value;
-                    RaisePropertyChanged("CurrentProgress");
-                }
-            }
-        }
         #endregion
 
         #region Command
@@ -177,7 +164,7 @@ namespace HEICtoJpgConvert.ViewModel
             }
         }
 
-        private CancellationTokenSource _CanceltokenCource;
+        //private CancellationTokenSource _CanceltokenCource;
         private void ConvertProcess_OnClick()
         {
             ((MetroWindow)Application.Current.MainWindow).ShowChildWindowAsync(new ProgressBarChildView() { DataContext = ProgerssBarChild });
@@ -185,22 +172,23 @@ namespace HEICtoJpgConvert.ViewModel
             if(ConvertFileList.Count != 0)
             {
                 List<string> fileList = new List<string>(ConvertFileList);
-                int num = 0;
-
                 ((MetroWindow)Application.Current.MainWindow).Dispatcher.BeginInvoke(new Action(() =>
                 {
                     // Ui update
                 }));
 
-                CancellationToken cancelToken = _CanceltokenCource.Token;
+                //CancellationToken cancelToken = _CanceltokenCource.Token;
                 Task.Run(() =>
                 {
                     try
                     {
+                        double count = 1;
                         foreach (string file in fileList)
                         {
-                            RunConvertProcess(file);
-                            int ff = num / fileList.Count;
+                            //RunConvertProcess(file);
+                            double per = (count / (double)fileList.Count) * 100;
+
+                            ProgerssBarChild.CurrentProgress = (int)per;
                         }
                     }
                     catch (OperationCanceledException)
@@ -240,30 +228,30 @@ namespace HEICtoJpgConvert.ViewModel
         #endregion
 
         #region Progress Bar
-        private void worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
-        {
-            CurrentProgress = e.ProgressPercentage;
-            //TextBlockText = (string)e.UserState;
-        }
+        //private void worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        //{
+        //    CurrentProgress = e.ProgressPercentage;
+        //    //TextBlockText = (string)e.UserState;
+        //}
 
-        private void worker_DoWork(object sender, DoWorkEventArgs e)
-        {
-            var worker = sender as BackgroundWorker;
-            worker.ReportProgress(0, String.Format("Processing Iteration 1."));
-            for (int i = 0; i < 100; i++)
-            {
-                Thread.Sleep(100);
-                worker.ReportProgress((i + 1), String.Format("Processing Iteration {0}.", i + 2));
-            }
+        //private void worker_DoWork(object sender, DoWorkEventArgs e)
+        //{
+        //    var worker = sender as BackgroundWorker;
+        //    worker.ReportProgress(0, String.Format("Processing Iteration 1."));
+        //    for (int i = 0; i < 100; i++)
+        //    {
+        //        Thread.Sleep(100);
+        //        worker.ReportProgress((i + 1), String.Format("Processing Iteration {0}.", i + 2));
+        //    }
 
-            worker.ReportProgress(100, "Done Processing.");
-        }
+        //    worker.ReportProgress(100, "Done Processing.");
+        //}
 
-        private void worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            MessageBox.Show("All Done!");
-            CurrentProgress = 0;
-        }
+        //private void worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        //{
+        //    MessageBox.Show("All Done!");
+        //    CurrentProgress = 0;
+        //}
         #endregion
 
         public ProgressBarChildViewModel ProgerssBarChild { get; set; }

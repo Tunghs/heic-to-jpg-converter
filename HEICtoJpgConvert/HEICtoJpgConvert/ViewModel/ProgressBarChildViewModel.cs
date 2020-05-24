@@ -10,13 +10,19 @@ namespace HEICtoJpgConvert.ViewModel
 {
     public class ProgressBarChildViewModel : ViewModelBase
     {
-        private string _saveDirPath = "hiiiiiiiiiiiiiiiiiii";
-        public string SaveDirPath
+        private int _currentProgress;
+        public int CurrentProgress
         {
-            get { return _saveDirPath; }
-            set { _saveDirPath = value; RaisePropertyChanged("SaveDirPath"); }
+            get { return _currentProgress; }
+            set
+            {
+                if (_currentProgress != value)
+                {
+                    _currentProgress = value;
+                    RaisePropertyChanged("CurrentProgress");
+                }
+            }
         }
-
         public ProgressBarChildViewModel()
         {
 
