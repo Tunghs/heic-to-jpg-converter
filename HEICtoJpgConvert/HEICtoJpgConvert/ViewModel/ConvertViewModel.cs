@@ -187,6 +187,11 @@ namespace HEICtoJpgConvert.ViewModel
                 List<string> fileList = new List<string>(ConvertFileList);
                 int num = 0;
 
+                ((MetroWindow)Application.Current.MainWindow).Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    // Ui update
+                }));
+
                 CancellationToken cancelToken = _CanceltokenCource.Token;
                 Task.Run(() =>
                 {
