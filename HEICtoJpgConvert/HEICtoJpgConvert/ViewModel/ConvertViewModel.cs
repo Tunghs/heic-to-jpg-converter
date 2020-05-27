@@ -201,57 +201,8 @@ namespace HEICtoJpgConvert.ViewModel
             {
                 MessageBox.Show("No files to convert.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
-
-            // ((MetroWindow)Application.Current.MainWindow).ShowChildWindowAsync(new ProgressBarChildView());
-            //if (CollectionFileList.Count != 0)
-            //{
-            //    //List<string> fileList = new List<string>(CollectionFileList);
-            //    //foreach(string file in fileList)
-            //    //{
-            //    //    ConvertProcess(file);
-            //    //    CollectionFileList.Remove(file);
-            //    //    // 실시간 ui 업데이트
-            //    //    // ((MetroWindow)Application.Current.MainWindow).Dispatcher.Invoke((ThreadStart)(()=>{ }), DispatcherPriority.ApplicationIdle);
-            //    //}
-            //    foreach (string filePath in CollectionFileList)
-            //        ConvertProcess(filePath);
-
-            //    CollectionFileList.Clear();
-            //    MessageBox.Show("Convert complete.", "Complete");
-            //}
-            //else
-            //{
-            //    MessageBox.Show("No files to convert.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
-            //}
         }
         #endregion
-        #endregion
-
-        #region Progress Bar
-        //private void worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
-        //{
-        //    CurrentProgress = e.ProgressPercentage;
-        //    //TextBlockText = (string)e.UserState;
-        //}
-
-        //private void worker_DoWork(object sender, DoWorkEventArgs e)
-        //{
-        //    var worker = sender as BackgroundWorker;
-        //    worker.ReportProgress(0, String.Format("Processing Iteration 1."));
-        //    for (int i = 0; i < 100; i++)
-        //    {
-        //        Thread.Sleep(100);
-        //        worker.ReportProgress((i + 1), String.Format("Processing Iteration {0}.", i + 2));
-        //    }
-
-        //    worker.ReportProgress(100, "Done Processing.");
-        //}
-
-        //private void worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        //{
-        //    MessageBox.Show("All Done!");
-        //    CurrentProgress = 0;
-        //}
         #endregion
 
         public ProgressBarChildViewModel ProgerssBarChild { get; set; }
