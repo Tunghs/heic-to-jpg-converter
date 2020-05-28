@@ -164,12 +164,27 @@ namespace HEICtoJpgConvert.ViewModel
             }
         }
 
+
+        private int _currentProgress;
+        public int CurrentProgress
+        {
+            get { return _currentProgress; }
+            set
+            {
+                if (_currentProgress != value)
+                {
+                    _currentProgress = value;
+                    RaisePropertyChanged("CurrentProgress");
+                }
+            }
+        }
+
         //private CancellationTokenSource _CanceltokenCource;
         private void ConvertProcess_OnClick()
         {
-            ((MetroWindow)Application.Current.MainWindow).ShowChildWindowAsync(new ProgressBarChildView() { DataContext = ProgerssBarChild });
+            ((MetroWindow)Application.Current.MainWindow).ShowChildWindowAsync(new ProgressBarChildView() { DataContext = this });
 
-            if(ConvertFileList.Count != 0)
+            if(ConvertFileList.Count == 0)
             {
                 List<string> fileList = new List<string>(ConvertFileList);
                 ((MetroWindow)Application.Current.MainWindow).Dispatcher.BeginInvoke(new Action(() =>
@@ -183,12 +198,23 @@ namespace HEICtoJpgConvert.ViewModel
                     try
                     {
                         double count = 1;
-                        foreach (string file in fileList)
+                        //foreach (string file in fileList)
+                        //{
+                        //    //RunConvertProcess(file);
+                        //    double per = (count / (double)fileList.Count) * 100;
+
+                        //    ProgerssBarChild.CurrentProgress = (int)per;
+                        //}
+
+                        for (int i =0; i<10000; i++)
                         {
-                            //RunConvertProcess(file);
                             double per = (count / (double)fileList.Count) * 100;
 
-                            ProgerssBarChild.CurrentProgress = (int)per;
+                            
+                            ((MetroWindow)Application.Current.MainWindow).Dispatcher.BeginInvoke(new Action(() =>
+                            {
+                                CurrentProgress = (int)per;
+                            }));
                         }
                     }
                     catch (OperationCanceledException)

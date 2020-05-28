@@ -9,8 +9,8 @@
              GlowBrush="#666666" TitleBarBackground="#666666" TitleForeground="White">
 
     <Grid>
-        <StackPanel Orientation="Vertical" VerticalAlignment="Center">
-            <TextBlock Text="진행 (1/8)" Margin="0 0 0 5" FontSize="12"/>
+        <StackPanel Orientation="Vertical" VerticalAlignment="Center" Margin="10 0">
+            <TextBlock Text="{Binding ProgressText}" Margin="0 0 0 5" FontSize="12"/>
             <ProgressBar Grid.Row="1" Height="20" Visibility="Visible"
                      Value="{Binding CurrentProgress, Mode=OneWay}"/>
         </StackPanel>
