@@ -179,6 +179,14 @@ namespace HEICtoJpgConvert.ViewModel
             }
         }
 
+        private string _testText;
+        public string TestText
+        {
+            get { return _testText; }
+            set { _testText = value; RaisePropertyChanged("TestText"); }
+        }
+
+
         //private CancellationTokenSource _CanceltokenCource;
         private void ConvertProcess_OnClick()
         {
@@ -206,16 +214,21 @@ namespace HEICtoJpgConvert.ViewModel
                         //    ProgerssBarChild.CurrentProgress = (int)per;
                         //}
 
-                        for (int i =0; i<10000; i++)
-                        {
-                            double per = (count / (double)fileList.Count) * 100;
+                        //for (int i =0; i<10000; i++)
+                        //{
+                        //    double per = (count / (double)fileList.Count) * 100;
 
-                            
-                            ((MetroWindow)Application.Current.MainWindow).Dispatcher.BeginInvoke(new Action(() =>
-                            {
-                                CurrentProgress = (int)per;
-                            }));
-                        }
+
+                        //    ((MetroWindow)Application.Current.MainWindow).Dispatcher.BeginInvoke(new Action(() =>
+                        //    {
+                        //        CurrentProgress = (int)per;
+                        //    }));
+                        //}
+                        ((MetroWindow)Application.Current.MainWindow).Dispatcher.Invoke(new Action(() =>
+                        {
+                            TestText = "실행한다이";
+                        }));
+                        
                     }
                     catch (OperationCanceledException)
                     {
