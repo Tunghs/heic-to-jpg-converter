@@ -4,16 +4,17 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:SimpleChildWindow="clr-namespace:MahApps.Metro.SimpleChildWindow;assembly=MahApps.Metro.SimpleChildWindow"
-             mc:Ignorable="d" Title="Loading..." d:DesignHeight="200" d:DesignWidth="400"
+             mc:Ignorable="d" Title="Converting..." d:DesignHeight="200" d:DesignWidth="400"
              ChildWindowHeight="150" ChildWindowWidth="400" ShowCloseButton="True" OverlayBrush="Transparent"
              GlowBrush="#666666" TitleBarBackground="#666666" TitleForeground="White">
 
     <Grid>
         <StackPanel Orientation="Vertical" VerticalAlignment="Center" Margin="10 0">
-            <TextBlock Text="{Binding TestText}" Margin="0 0 0 5" FontSize="12"/>
-            <ProgressBar Grid.Row="1" Height="20" Visibility="Visible"
-                     Value="{Binding CurrentProgress, Mode=OneWay}"/>
+            <TextBlock Text="{Binding ConvertingFileName}" Margin="0 0 0 5" FontSize="12" HorizontalAlignment="Left"/>
+            <Grid Height="20">
+                <ProgressBar x:Name="ProgressBar1" Height="20" Minimum="0" Maximum="{Binding ProgressMaximum}" Value="{Binding ProgressValue}" VerticalAlignment="Center"/>
+                <TextBlock Text="(1/81)" HorizontalAlignment="Center"/>
+            </Grid>
         </StackPanel>
-        
     </Grid>
 </SimpleChildWindow:ChildWindow>

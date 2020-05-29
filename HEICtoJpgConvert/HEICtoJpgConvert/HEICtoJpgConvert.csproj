@@ -112,7 +112,6 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="ViewModel\ConvertViewModel.cs" />
-    <Compile Include="ViewModel\ProgressBarChildViewModel.cs" />
     <Compile Include="View\ConvertView.xaml.cs">
       <DependentUpon>ConvertView.xaml</DependentUpon>
     </Compile>

@@ -28,6 +28,7 @@ namespace HEICtoJpgConvert.ViewModel
             get { return _saveDirPath; }
             set { _saveDirPath = value; RaisePropertyChanged("SaveDirPath"); }
         }
+
         private ObservableCollection<string> _converFileList = new ObservableCollection<string>();
         public ObservableCollection<string> ConvertFileList
         {
@@ -40,23 +41,47 @@ namespace HEICtoJpgConvert.ViewModel
             get { return _selectedListViewItems; }
             set { _selectedListViewItems = value; RaisePropertyChanged("SelectedListViewItems"); }
         }
+
         private bool _isSaveDirChecked = false;
         public bool IsSaveDirChecked
         {
             get { return _isSaveDirChecked; }
             set { _isSaveDirChecked = value; RaisePropertyChanged("IsSaveDirChecked"); }
         }
+
         private bool _isChecked;
         public bool IsChecked
         {
             get { return _isChecked; }
             set { _isChecked = value; RaisePropertyChanged("IsChecked"); }
         }
+
         private Brush _listViewBorderColor = (Brush)(new BrushConverter().ConvertFromString("LightGray"));
         public Brush ListViewBorderColor
         {
             get { return _listViewBorderColor; }
             set { _listViewBorderColor = value; RaisePropertyChanged("ListViewBorderColor"); }
+        }
+
+        private int _progressMaximum;
+        public int ProgressMaximum
+        {
+            get { return _progressMaximum; }
+            set { _progressMaximum = value; RaisePropertyChanged("ProgressMaximum"); }
+        }
+
+        private int _progressValue;
+        public int ProgressValue
+        {
+            get { return _progressValue; }
+            set { _progressValue = value; RaisePropertyChanged("ProgressValue"); }
+        }
+
+        private string _convertingFileName;
+        public string ConvertingFileName
+        {
+            get { return _convertingFileName; }
+            set { _convertingFileName = value; RaisePropertyChanged("ConvertingFileName"); }
         }
         #endregion
 
@@ -94,8 +119,16 @@ namespace HEICtoJpgConvert.ViewModel
                 foreach (string file in files)
                 {
                     if (file.ToLower().Contains("heic"))
+                    {
                         if (!ConvertFileList.Contains(file))
+                        {
                             ConvertFileList.Add(file);
+                        }
+                        else
+                        {
+                            MessageBox.Show("이미 리스트에 포함되어있습니다.");
+                        }   
+                    }   
                 }
                 ListViewBorderColor = (Brush)(new BrushConverter().ConvertFromString("LightGray"));
             }
@@ -130,7 +163,7 @@ namespace HEICtoJpgConvert.ViewModel
                     DeleteFile_OnClick();
                     break;
                 case "Convert":
-                    ConvertProcess_OnClick();
+                    Convert_OnClick();
                     break;
             }
         }
@@ -151,8 +184,16 @@ namespace HEICtoJpgConvert.ViewModel
             if (dlg.ShowDialog() == CommonFileDialogResult.Ok)
             {
                 foreach (string file in dlg.FileNames)
+                {
                     if (!ConvertFileList.Contains(file))
+                    {
                         ConvertFileList.Add(file);
+                    }
+                    else
+                    {
+                        MessageBox.Show("이미 리스트에 포함되어있습니다.");
+                    }
+                }
             }
         }
 
@@ -164,77 +205,13 @@ namespace HEICtoJpgConvert.ViewModel
             }
         }
 
-
-        private int _currentProgress;
-        public int CurrentProgress
-        {
-            get { return _currentProgress; }
-            set
-            {
-                if (_currentProgress != value)
-                {
-                    _currentProgress = value;
-                    RaisePropertyChanged("CurrentProgress");
-                }
-            }
-        }
-
-        private string _testText;
-        public string TestText
-        {
-            get { return _testText; }
-            set { _testText = value; RaisePropertyChanged("TestText"); }
-        }
-
-
         //private CancellationTokenSource _CanceltokenCource;
-        private void ConvertProcess_OnClick()
+        private void Convert_OnClick()
         {
-            ((MetroWindow)Application.Current.MainWindow).ShowChildWindowAsync(new ProgressBarChildView() { DataContext = this });
-
-            if(ConvertFileList.Count == 0)
+            if(ConvertFileList.Count != 0)
             {
-                List<string> fileList = new List<string>(ConvertFileList);
-                ((MetroWindow)Application.Current.MainWindow).Dispatcher.BeginInvoke(new Action(() =>
-                {
-                    // Ui update
-                }));
-
-                //CancellationToken cancelToken = _CanceltokenCource.Token;
-                Task.Run(() =>
-                {
-                    try
-                    {
-                        double count = 1;
-                        //foreach (string file in fileList)
-                        //{
-                        //    //RunConvertProcess(file);
-                        //    double per = (count / (double)fileList.Count) * 100;
-
-                        //    ProgerssBarChild.CurrentProgress = (int)per;
-                        //}
-
-                        //for (int i =0; i<10000; i++)
-                        //{
-                        //    double per = (count / (double)fileList.Count) * 100;
-
-
-                        //    ((MetroWindow)Application.Current.MainWindow).Dispatcher.BeginInvoke(new Action(() =>
-                        //    {
-                        //        CurrentProgress = (int)per;
-                        //    }));
-                        //}
-                        ((MetroWindow)Application.Current.MainWindow).Dispatcher.Invoke(new Action(() =>
-                        {
-                            TestText = "실행한다이";
-                        }));
-                        
-                    }
-                    catch (OperationCanceledException)
-                    {
-                        MessageBox.Show("취소하셨습니다.");
-                    }
-                });
+                
+                RunConvertProcess();
             }
             else
             {
@@ -244,15 +221,39 @@ namespace HEICtoJpgConvert.ViewModel
         #endregion
         #endregion
 
-        public ProgressBarChildViewModel ProgerssBarChild { get; set; }
-
         public ConvertViewModel()
         {
-            ProgerssBarChild = new ProgressBarChildViewModel();
             InitRelayCommand();
         }
 
-        private void RunConvertProcess(string srcPath)
+        private void RunConvertProcess()
+        {
+            ((MetroWindow)Application.Current.MainWindow).ShowChildWindowAsync(new ProgressBarChildView() { DataContext = this });
+            List<string> fileList = new List<string>(ConvertFileList);
+
+            //CancellationToken cancelToken = _CanceltokenCource.Token;
+            Task.Run(() =>
+            {
+                try
+                {
+                    ProgressMaximum = fileList.Count;
+
+                    int count = 1;
+                    foreach (string file in fileList)
+                    {
+                        ConvertingFileName = file;
+                        ConvertingHeicToJpg(file);
+                        ProgressValue += count;
+                    }
+                }
+                catch (OperationCanceledException)
+                {
+                    MessageBox.Show("취소하셨습니다.");
+                }
+            });
+        }
+
+        private void ConvertingHeicToJpg(string srcPath)
         {
             string saveDir = Path.Combine(Path.GetDirectoryName(srcPath), "SaveJPG");
 
