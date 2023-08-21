@@ -18,18 +18,8 @@ namespace HEICtoJpgConvert.ViewModel
         {
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
 
-            ////if (ViewModelBase.IsInDesignModeStatic)
-            ////{
-            ////    // Create design time view services and models
-            ////    SimpleIoc.Default.Register<IDataService, DesignDataService>();
-            ////}
-            ////else
-            ////{
-            ////    // Create run time view services and models
-            ////    SimpleIoc.Default.Register<IDataService, DataService>();
-            ////}
-
             SimpleIoc.Default.Register<MainViewModel>();
+            SimpleIoc.Default.Register<ConvertViewModel>();
         }
 
         public MainViewModel Main
@@ -37,6 +27,14 @@ namespace HEICtoJpgConvert.ViewModel
             get
             {
                 return ServiceLocator.Current.GetInstance<MainViewModel>();
+            }
+        }
+
+        public ConvertViewModel Convert
+        {
+            get 
+            { 
+                return ServiceLocator.Current.GetInstance<ConvertViewModel>(); 
             }
         }
         
