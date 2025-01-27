@@ -9,6 +9,9 @@ namespace ImageConverter
     /// </summary>
     public partial class App : Application
     {
+        public App()
+        {
+            new Bootstrapper();
+        }
     }
-
 }
