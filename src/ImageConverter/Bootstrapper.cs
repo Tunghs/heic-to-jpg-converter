@@ -1,4 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.DependencyInjection;
+using ImageConverter.ViewModel;
+
 using Microsoft.Extensions.DependencyInjection;
 
 using Wpf.Ui;
@@ -27,7 +29,7 @@ namespace ImageConverter
             services.AddSingleton<ISnackbarService, SnackbarService>();
 
             // Viewer ViewModels
-
+            services.AddTransient<ConverterViewModel>();
 
             return services.BuildServiceProvider();
         }
