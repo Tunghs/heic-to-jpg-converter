@@ -15,9 +15,4 @@
     <PackageReference Include="WPF-UI" Version="3.0.5" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="View\" />
-    <Folder Include="ViewModel\" />
-  </ItemGroup>
-
 </Project>
