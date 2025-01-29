@@ -8,7 +8,7 @@
     xmlns:view="clr-namespace:ImageConverter.View"
     Title="ShellWindow"
     Width="800"
-    Height="450"
+    Height="520"
     ExtendsContentIntoTitleBar="True"
     WindowBackdropType="Mica"
     WindowCornerPreference="Round"
