@@ -13,6 +13,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media.Imaging;
 
 namespace ImageConverter.ViewModel
 {
@@ -130,7 +131,27 @@ namespace ImageConverter.ViewModel
 
         private async void Convert()
         {
+            var outputPath = "";
 
+            for (int index = 0; index < Images.Count; index++)
+            {
+                using (var fileStream = new FileStream(Images[index], FileMode.Open, FileAccess.Read))
+                {
+                    var decoder = new BitmapDecoder(
+                        new Uri(Images[index]),
+                        BitmapCreateOptions.None,
+                        BitmapCacheOption.OnLoad
+                    );
+
+                    var encoder = new PngBitmapEncoder();
+                    encoder.Frames.Add(BitmapFrame.Create(decoder.Frames[0]));
+
+                    using (var outputStream = new FileStream(outputPath, FileMode.Create))
+                    {
+                        encoder.Save(outputStream);
+                    }
+                }
+            }
         }
     }
 }
