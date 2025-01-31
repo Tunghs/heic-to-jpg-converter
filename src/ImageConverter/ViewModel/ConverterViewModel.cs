@@ -137,11 +137,11 @@ namespace ImageConverter.ViewModel
             {
                 using (var fileStream = new FileStream(Images[index], FileMode.Open, FileAccess.Read))
                 {
-                    var decoder = new BitmapDecoder(
-                        new Uri(Images[index]),
-                        BitmapCreateOptions.None,
-                        BitmapCacheOption.OnLoad
-                    );
+                    BitmapDecoder decoder = BitmapDecoder.Create(
+                                    fileStream,
+                                    BitmapCreateOptions.PreservePixelFormat,
+                                    BitmapCacheOption.OnLoad
+                                );
 
                     var encoder = new PngBitmapEncoder();
                     encoder.Frames.Add(BitmapFrame.Create(decoder.Frames[0]));
