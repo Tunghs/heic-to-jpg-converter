@@ -79,11 +79,26 @@
                 Content="..." />
         </Grid>
 
-        <ui:Button
-            Grid.Row="6"
-            HorizontalAlignment="Stretch"
-            VerticalAlignment="Stretch"
-            Command="{Binding ConvertBtnClickCommand}"
-            Content="Convert" />
+        <Grid Grid.Row="6">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="120" />
+                <ColumnDefinition Width="10" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <ComboBox VerticalAlignment="Stretch" VerticalContentAlignment="Stretch">
+                <ComboBoxItem Content="JPG" />
+                <ComboBoxItem Content="PNG" />
+                <ComboBoxItem Content="BMP" />
+            </ComboBox>
+
+            <ui:Button
+                Grid.Column="2"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                Command="{Binding ConvertBtnClickCommand}"
+                Content="Convert" />
+        </Grid>
+
     </Grid>
 </UserControl>
